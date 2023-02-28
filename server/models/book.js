@@ -13,9 +13,9 @@ module.exports = (sequelize, DataTypes) => {
   }
   Book.init(
     {
-      book_name: DataTypes.STRING,
-      book_code: DataTypes.INTEGER,
-      cate_id: DataTypes.INTEGER,
+      book_name: { type: DataTypes.STRING, allowNull: false },
+      book_code: { allowNull: true, type: DataTypes.INTEGER },
+      cate_id: { allowNull: false, type: DataTypes.INTEGER },
     },
     {
       sequelize,

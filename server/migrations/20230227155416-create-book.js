@@ -23,13 +23,20 @@ module.exports = {
           type: Sequelize.INTEGER,
           allowNull: false,
         },
-        createdAt: {
+        created_at: {
           allowNull: false,
           type: Sequelize.DATE,
+          defaultValue: Sequelize.literal("TIMESTAMP"),
         },
-        updatedAt: {
+        updated_at: {
           allowNull: false,
           type: Sequelize.DATE,
+          defaultValue: Sequelize.literal("TIMESTAMP"),
+        },
+        deleted_at: {
+          allowNull: true,
+          type: Sequelize.DATE,
+          defaultValue: Sequelize.literal("TIMESTAMP"),
         },
       },
       {
