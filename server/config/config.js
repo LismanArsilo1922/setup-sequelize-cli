@@ -8,6 +8,10 @@ module.exports = {
     database: process.env.DB_DATABASE_DEV,
     host: process.env.DB_HOST,
     dialect: process.env.DB_DIALECT,
+    timezone: "+07:00",
+    define: {
+      timestamps: true,
+    },
   },
   test: {
     username: "root",
