@@ -1,6 +1,17 @@
 "use strict";
 const { Model } = require("sequelize");
+const { format } = require("date-fns");
 module.exports = (sequelize, DataTypes) => {
+  const currentTime = (time) => {
+    const date = sequelize.fn(
+      "CONVERT_TZ",
+      sequelize.fn("NOW"),
+      "+00:00",
+      "+07:00"
+    );
+    return date;
+  };
+
   class Category extends Model {
     /**
      * Helper method for defining associations.
@@ -9,18 +20,42 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Category.hasMany(models.Books, { foreignKey: "cate_id" });
     }
   }
   Category.init(
     {
       cate_name: DataTypes.STRING,
-      cate_code: DataTypes.INTEGER,
+      cate_code: {
+        type: DataTypes.INTEGER,
+      },
+      created_at: {
+        type: DataTypes.DATE,
+        field: "created_at",
+        get: function () {
+          return this.getDataValue("created_at")
+            ? format(this.getDataValue("created_at"), "yyyy-MM-dd HH:mm:ss")
+            : this.getDataValue("created_at");
+        },
+      },
+      updated_at: {
+        type: DataTypes.DATE,
+        field: "updated_at",
+        get: function () {
+          return this.getDataValue("updated_at")
+            ? format(this.getDataValue("updated_at"), "yyyy-MM-dd HH:mm:ss")
+            : this.getDataValue("updated_at");
+        },
+      },
     },
     {
       sequelize,
       modelName: "Categories",
       timestamps: true,
       paranoid: true,
+      createdAt: "created_at",
+      updatedAt: "updated_at",
+      deletedAt: "deleted_at",
     }
   );
   return Category;
