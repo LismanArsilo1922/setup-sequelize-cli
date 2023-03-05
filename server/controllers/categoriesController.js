@@ -32,7 +32,7 @@ const deletedCategories = async (req, res, next) => {
   }
 };
 
-const createCategories = async (req, res) => {
+const createCategories = async (req, res, next) => {
   console.info(req.body);
   try {
     const data = await Categories.create(req.body);
@@ -42,8 +42,8 @@ const createCategories = async (req, res) => {
       data: data,
     });
   } catch (error) {
-    if (error.name === "SequelizeUniqueConstraintError") {
-      res.status(400).json({ message: "Error: Data already exists" });
+    if (error.name === "SequelizeValidationError") {
+      return next(createError(400, "Category already exists"));
     } else {
       next(error);
     }

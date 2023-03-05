@@ -35,13 +35,12 @@ const deletedBook = async (req, res) => {
 const createBook = async (req, res, next) => {
   try {
     const data = await Books.create(req.body);
-    console.info({ iniData: data });
 
-    // return res.status(200).json({
-    //   status: true,
-    //   message: "ok",
-    //   data: data,
-    // });
+    return res.status(200).json({
+      status: true,
+      message: "ok",
+      data: data,
+    });
   } catch (error) {
     if (error.name === "SequelizeUniqueConstraintError") {
       next(createError(400, "Data Unique"));

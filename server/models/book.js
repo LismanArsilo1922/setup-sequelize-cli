@@ -21,7 +21,14 @@ module.exports = (sequelize, DataTypes) => {
     {
       book_name: { allowNull: false, type: DataTypes.STRING },
       book_code: { allowNull: true, type: DataTypes.INTEGER },
-      cate_id: { allowNull: false, type: DataTypes.INTEGER },
+      cate_id: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+        validate: {
+          notNull: { msg: "cate_id must not be null." },
+          notEmpty: { msg: "cate_id must not be empty." },
+        },
+      },
       created_at: {
         type: DataTypes.DATE,
         field: "created_at",
@@ -47,6 +54,7 @@ module.exports = (sequelize, DataTypes) => {
       createdAt: "created_at",
       updatedAt: "updated_at",
       deletedAt: "deleted_at",
+      timestamps: true,
       paranoid: true,
     }
   );

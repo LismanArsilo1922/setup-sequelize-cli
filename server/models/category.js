@@ -2,16 +2,6 @@
 const { Model } = require("sequelize");
 const { format } = require("date-fns");
 module.exports = (sequelize, DataTypes) => {
-  const currentTime = (time) => {
-    const date = sequelize.fn(
-      "CONVERT_TZ",
-      sequelize.fn("NOW"),
-      "+00:00",
-      "+07:00"
-    );
-    return date;
-  };
-
   class Category extends Model {
     /**
      * Helper method for defining associations.
@@ -25,7 +15,22 @@ module.exports = (sequelize, DataTypes) => {
   }
   Category.init(
     {
-      cate_name: DataTypes.STRING,
+      cate_name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          isUnique: async function (value, next) {
+            const user = await Category.findOne({
+              where: { cate_name: value },
+            });
+            if (user) {
+              const error = new Error();
+              next(error);
+            }
+            next();
+          },
+        },
+      },
       cate_code: {
         type: DataTypes.INTEGER,
       },
