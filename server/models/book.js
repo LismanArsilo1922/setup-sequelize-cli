@@ -24,7 +24,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         validate: {
           async checkUnique(value) {
-            console.info({ iniValue: value });
             const bookName = await sequelize.models.Books.findOne({
               where: { book_name: value },
             });
