@@ -38,7 +38,7 @@ const createBook = async (req, res, next) => {
 
     return res.status(200).json({
       status: true,
-      message: "ok",
+      message: "Created Category Successfully",
       data: data,
     });
   } catch (error) {
