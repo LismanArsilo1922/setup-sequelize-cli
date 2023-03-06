@@ -42,11 +42,7 @@ const createBook = async (req, res, next) => {
       data: data,
     });
   } catch (error) {
-    if (error.name === "SequelizeUniqueConstraintError") {
-      next(createError(400, "Data Unique"));
-    } else {
-      next(error);
-    }
+    next(error);
   }
 };
 module.exports = {

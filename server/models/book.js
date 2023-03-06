@@ -19,14 +19,30 @@ module.exports = (sequelize, DataTypes) => {
   }
   Book.init(
     {
-      book_name: { allowNull: false, type: DataTypes.STRING },
+      book_name: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        validate: {
+          async checkUnique(value) {
+            console.info({ iniValue: value });
+            const bookName = await sequelize.models.Books.findOne({
+              where: { book_name: value },
+            });
+            if (bookName) throw new Error("Book Name Already Exist");
+          },
+        },
+      },
       book_code: { allowNull: true, type: DataTypes.INTEGER },
       cate_id: {
         allowNull: false,
         type: DataTypes.INTEGER,
         validate: {
-          notNull: { msg: "cate_id must not be null." },
-          notEmpty: { msg: "cate_id must not be empty." },
+
+          async checkFkCategory(value) {
+            const category = await sequelize.models.Categories.findByPk(value);
+            if (!category) throw new Error("Category Not Found");
+          },
+
         },
       },
       created_at: {
