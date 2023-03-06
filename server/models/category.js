@@ -15,18 +15,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Category.init(
     {
-      cate_name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          async checkUnique(value) {
-            const cateName = await sequelize.models.Categories.findOne({
-              where: { cate_name: value },
-            });
-            if (cateName) throw new Error("Category Name Already Exist");
-          },
-        },
-      },
+      cate_name: DataTypes.STRING,
       cate_code: {
         type: DataTypes.INTEGER,
       },
