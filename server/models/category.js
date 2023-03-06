@@ -15,22 +15,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Category.init(
     {
-      cate_name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          isUnique: async function (value, next) {
-            const user = await Category.findOne({
-              where: { cate_name: value },
-            });
-            if (user) {
-              const error = new Error();
-              next(error);
-            }
-            next();
-          },
-        },
-      },
+      cate_name: DataTypes.STRING,
       cate_code: {
         type: DataTypes.INTEGER,
       },
