@@ -37,10 +37,12 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.INTEGER,
         validate: {
+
           async checkFkCategory(value) {
             const category = await sequelize.models.Categories.findByPk(value);
             if (!category) throw new Error("Category Not Found");
           },
+
         },
       },
       created_at: {
@@ -68,6 +70,7 @@ module.exports = (sequelize, DataTypes) => {
       createdAt: "created_at",
       updatedAt: "updated_at",
       deletedAt: "deleted_at",
+      timestamps: true,
       paranoid: true,
     }
   );
