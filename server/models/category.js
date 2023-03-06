@@ -2,16 +2,6 @@
 const { Model } = require("sequelize");
 const { format } = require("date-fns");
 module.exports = (sequelize, DataTypes) => {
-  const currentTime = (time) => {
-    const date = sequelize.fn(
-      "CONVERT_TZ",
-      sequelize.fn("NOW"),
-      "+00:00",
-      "+07:00"
-    );
-    return date;
-  };
-
   class Category extends Model {
     /**
      * Helper method for defining associations.
