@@ -7,7 +7,7 @@ const getAllCategories = async (req, res) => {
 
     return res.status(200).json({
       status: true,
-      message: "OK",
+      message: "Get All Category Successfully",
       data: data,
     });
   } catch (error) {
@@ -25,7 +25,7 @@ const deletedCategories = async (req, res, next) => {
 
     return res.status(200).json({
       status: true,
-      message: "OK Hapus",
+      message: "Deleted Category Successfully",
     });
   } catch (error) {
     next(error);
@@ -38,7 +38,7 @@ const createCategories = async (req, res, next) => {
     const data = await Categories.create(req.body);
     return res.status(200).json({
       status: true,
-      message: "ok",
+      message: "Created Category Successfully",
       data: data,
     });
   } catch (error) {
